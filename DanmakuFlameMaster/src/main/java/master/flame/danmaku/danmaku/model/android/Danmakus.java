@@ -178,7 +178,11 @@ public class Danmakus implements IDanmakus {
     @Override
     public IDanmakus subnew(long startTime, long endTime) {
         Collection<BaseDanmaku> subset = subset(startTime, endTime);
-        return new Danmakus(subset);
+        if (subset == null) {
+            return null;
+        }
+        LinkedList<BaseDanmaku> newSet = new LinkedList<BaseDanmaku>(subset);
+        return new Danmakus(newSet);
     }
 
     @Override

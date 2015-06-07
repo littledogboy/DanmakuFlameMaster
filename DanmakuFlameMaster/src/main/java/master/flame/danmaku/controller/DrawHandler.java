@@ -16,6 +16,7 @@
 
 package master.flame.danmaku.controller;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Handler;
@@ -100,6 +101,7 @@ public class DrawHandler extends Handler {
 
     private final RenderingState mRenderingState = new RenderingState();
 
+    @SuppressLint("Deprecated")
     private int mSkipFrames;
 
     private static final int MAX_RECORD_SIZE = 500;
@@ -493,13 +495,13 @@ public class DrawHandler extends Handler {
                 displayMetrics.scaledDensity);
         mDisp.resetSlopPixel(DanmakuGlobalConfig.DEFAULT.scaleTextSize);
         mDisp.setHardwareAccelerated(isHardwareAccelerated);
-        obtainMessage(NOTIFY_DISP_SIZE_CHANGED, false).sendToTarget();
 
         IDrawTask task = useDrwaingCache ? new CacheManagingDrawTask(timer, context, mDisp,
                 taskListener, 1024 * 1024 * AndroidUtils.getMemoryClass(context) / 3)
                 : new DrawTask(timer, context, mDisp, taskListener);
         task.setParser(mParser);
         task.prepare();
+        obtainMessage(NOTIFY_DISP_SIZE_CHANGED, false).sendToTarget();
         return task;
     }
 
